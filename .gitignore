@@ -1,17 +1,9 @@
 *.iml
-.gradle
-/local.properties
-/.idea/caches
-/.idea/libraries
-/.idea/modules.xml
-/.idea/workspace.xml
-/.idea/navEditor.xml
-/.idea/assetWizardSettings.xml
+local.properties
+
 .DS_Store
-/build
-/captures
-.externalNativeBuild
-.cxx
+build
+captures
 local.properties
 
 # Built application files
@@ -64,6 +56,10 @@ captures/
 .idea/caches
 .idea/modules.xml
 # Comment next line if keeping position of elements in Navigation Editor is relevant for you
+.idea/navEditor.xml
+.idea/caches
+.idea/libraries
+.idea/modules.xml
 .idea/navEditor.xml
 
 # Keystore files
