@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">ChessTimer</string>
+    <string name="player_1_countdown_time">Player 1 Countdown Time</string>
+    <string name="player_2_countdown_time">Player 2 Countdown Time</string>
+    <string name="settings">Settings</string>
+    <string name="start">Start</string>
+    <string name="TimeEnd">Time\'s Up!</string>
+</resources>
