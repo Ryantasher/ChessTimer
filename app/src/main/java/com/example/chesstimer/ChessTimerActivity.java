@@ -10,6 +10,13 @@ import java.util.Locale;
 
 public class ChessTimerActivity extends AppCompatActivity {
 
+    //NOTE: for some reason the initialization of the timers CANT be in a function
+    //      it needs to be placed directly under the onClick
+
+    //EXPERIMENT: experiment with moving timers before the onClick function, that way you
+    //            don't have to update player start times. Timer should just start where it
+    //            left off since it will be the same instance when you do .cancel() then .start()
+
     //initialize timers
     private CountDownTimer countDownTimer1;
     private CountDownTimer countDownTimer2;
@@ -53,13 +60,37 @@ public class ChessTimerActivity extends AppCompatActivity {
                 //if player1 isn't currently running when clicked (if clickable), start player1's clock
                 if (!isPlayer1TimerRunning) {
                     player1RemainingTime = player1startTime;
-                    initTimer(countDownTimer1);
+                    countDownTimer1 = new CountDownTimer(player1RemainingTime * 1000, 1000) {
+                        @Override
+                        public void onTick(long millisUntilFinished) {
+                            player1RemainingTime = millisUntilFinished / 1000;
+                            player1CountdownTextView.setText(formatTime(player1RemainingTime));
+                            player1startTime = player1RemainingTime;
+                        }
+
+                        @Override
+                        public void onFinish() {
+                            player1CountdownTextView.setText(R.string.TimeEnd);
+                        }
+                    };
                     startTimer(countDownTimer1);
 
                 } else { //if player1 layout is clicked while it is already running, switch to player2's clock
                     pauseTimer(countDownTimer1);
                     player2RemainingTime = player2startTime;
-                    initTimer(countDownTimer2);
+                    countDownTimer2 = new CountDownTimer(player2RemainingTime * 1000, 1000) {
+                        @Override
+                        public void onTick(long millisUntilFinished) {
+                            player2RemainingTime = millisUntilFinished / 1000;
+                            player2CountdownTextView.setText(formatTime(player2RemainingTime));
+                            player2startTime = player2RemainingTime;
+                        }
+
+                        @Override
+                        public void onFinish() {
+                            player2CountdownTextView.setText(R.string.TimeEnd);
+                        }
+                    };
                     startTimer(countDownTimer2);
                 }
             }
@@ -73,12 +104,36 @@ public class ChessTimerActivity extends AppCompatActivity {
                 //if player2 isn't currently running when clicked (if clickable), start player2's clock
                 if (!isPlayer2TimerRunning) {
                     player2RemainingTime = player2startTime;
-                    initTimer(countDownTimer2);
+                    countDownTimer2 = new CountDownTimer(player2RemainingTime * 1000, 1000) {
+                        @Override
+                        public void onTick(long millisUntilFinished) {
+                            player2RemainingTime = millisUntilFinished / 1000;
+                            player2CountdownTextView.setText(formatTime(player2RemainingTime));
+                            player2startTime = player2RemainingTime;
+                        }
+
+                        @Override
+                        public void onFinish() {
+                            player2CountdownTextView.setText(R.string.TimeEnd);
+                        }
+                    };
                     startTimer(countDownTimer2);
                 } else { //if player2 layout is clicked while it is already running, switch to player1's clock
                     pauseTimer(countDownTimer2);
                     player1RemainingTime = player1startTime;
-                    initTimer(countDownTimer1);
+                    countDownTimer1 = new CountDownTimer(player1RemainingTime * 1000, 1000) {
+                        @Override
+                        public void onTick(long millisUntilFinished) {
+                            player1RemainingTime = millisUntilFinished / 1000;
+                            player1CountdownTextView.setText(formatTime(player1RemainingTime));
+                            player1startTime = player1RemainingTime;
+                        }
+
+                        @Override
+                        public void onFinish() {
+                            player1CountdownTextView.setText(R.string.TimeEnd);
+                        }
+                    };
                     startTimer(countDownTimer1);
                 }
             }
@@ -98,39 +153,6 @@ public class ChessTimerActivity extends AppCompatActivity {
             return String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds);
         }
         return String.format(Locale.getDefault(), "%02d:%02d:%02d", hours, minutes, seconds);
-    }
-
-    //function that creates a new CountDownTimer object based on the player
-    private void initTimer(CountDownTimer cdt) {
-        if (cdt.equals(countDownTimer1)) {
-            countDownTimer1 = new CountDownTimer(player1RemainingTime * 1000, 1000) {
-                @Override
-                public void onTick(long millisUntilFinished) {
-                    player1RemainingTime = millisUntilFinished / 1000;
-                    player1CountdownTextView.setText(formatTime(player1RemainingTime));
-                    player1startTime = player1RemainingTime;
-                }
-
-                @Override
-                public void onFinish() {
-                    player1CountdownTextView.setText(R.string.TimeEnd);
-                }
-            };
-        } else {
-            countDownTimer2 = new CountDownTimer(player2RemainingTime * 1000, 1000) {
-                @Override
-                public void onTick(long millisUntilFinished) {
-                    player2RemainingTime = millisUntilFinished / 1000;
-                    player2CountdownTextView.setText(formatTime(player2RemainingTime));
-                    player2startTime = player2RemainingTime;
-                }
-
-                @Override
-                public void onFinish() {
-                    player2CountdownTextView.setText(R.string.TimeEnd);
-                }
-            };
-        }
     }
 
     //function that starts a CountDownTimer object based on the player
