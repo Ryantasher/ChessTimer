@@ -192,4 +192,11 @@ public class ChessTimerActivity extends AppCompatActivity {
         }
     }
 
+    private void resetTimer() {
+        countDownTimer1.cancel();
+        countDownTimer2.cancel();
+
+    }
+
+
 }
